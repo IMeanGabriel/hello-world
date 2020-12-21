@@ -21,7 +21,7 @@ void work(long long b) {
         fh[i] = ss[cur]; ++cur;
     }
 }
-bool check(int b) {
+bool check() {
     if(fh[0]=='+') {
         if(num[0]+num[1]==num[2]) return true;
     }
@@ -32,7 +32,8 @@ bool check(int b) {
          if(num[0]*num[1]==num[2]) return true;
     }
     else if(fh[0]=='/') {
-        if((num[0]%num[1]) + num[0]/num[1] == num[2]) return true;
+        if(num[1]==0) return false;
+        if((num[0]%num[1])==0 && num[0]/num[1] == num[2]) return true;
     }
     return false;
 }
@@ -42,18 +43,18 @@ int main() {
     mp['9']=9ll, mp['A']=10ll, mp['B']=11ll, mp['C']=12ll, 
     mp['D']=13ll, mp['E']=14ll, mp['F']=15ll;
     while(~scanf("%s", ss)) {
-        int len=strlen(ss), mx=0;
+        int len=strlen(ss);long long mx=1ll;
         for(int i=0;i<len;++i) {
             if(mp.count(ss[i])) {
                 if(mp[ss[i]]>mx) mx=mp[ss[i]];
             }
         }
         int flag=1;
-        for(int i=mx+1;i<=16;++i) {
+        for(long long i=mx+1;i<=16;++i) {
             work(i);
         //    printf("%d %c %d %d\n",num[0],fh[0],num[1],num[2]);
-            if(check(i)) {
-                printf("%d\n", i);
+            if(check()) {
+                printf("%lld\n", i);
                 flag=0;
                 break;
             }

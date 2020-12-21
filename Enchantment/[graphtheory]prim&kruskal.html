@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>[GraphTheory]Prim&#x26;Kruskal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta keywords="">
+<style>
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+line-height: 1.5;
+color: #24292e;
+font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+  sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+
+.dark, .solarizedDark {
+  color: #FFF;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: transparent;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+hr:before {
+  content: '';
+  display: table;
+}
+
+hr:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+&:before {
+  content: '';
+  display: table;
+}
+
+&:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+> :first-child {
+  margin-top: 0 !important;
+}
+
+> :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+hr {
+  background-color: #e1e4e8;
+  border: 0;
+  height: 0.25em;
+  margin: 24px 0;
+  padding: 0;
+}
+
+blockquote {
+  border-left: 0.25em solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  background-color: #fafbfc;
+  border: 1px solid #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+  color: #444d56;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  color: #6a737d;
+  font-size: 0.85em;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 0;
+}
+
+dl dd {
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+table {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  background-color: #fff;
+  box-sizing: content-box;
+  max-width: 100%;
+}
+
+img[align='right'] {
+  padding-left: 20px;
+}
+
+img[align='left'] {
+  padding-right: 20px;
+}
+
+code {
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: 0.2em 0.4em;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  word-break: normal;
+}
+
+.highlight {
+  margin-bottom: 16px;
+}
+
+.highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.highlight pre,
+pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+pre code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  max-width: auto;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+}
+
+kbd {
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+  color: #444d56;
+  display: inline-block;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+:checked + .radio-label {
+  border-color: #0366d6;
+  position: relative;
+  z-index: 1;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+</head>
+<body>
+<h2>图论——最小生成树(MST)</h2>
+<hr>
+<h3>Kruskal</h3>
+<hr>
+<h4>前置知识</h4>
+<ol>
+<li>
+<p>图</p>
+<ul>
+<li>连通图：在<strong>无向图</strong>中，若任意两个顶点都有路径相通，则称该无向图为连通图。</li>
+<li>强连通图：在<strong>有向图</strong>中，若任意两个顶点都有路径相通，则称该有向图为强连通图。</li>
+<li>连通网：在连通图中，若图的边具有一定的意义，每一条边都对应着一个数，称为权；权代表着连接连个顶点的代价，称这种连通图叫做连通网。</li>
+<li>生成树：一个连通图的生成树是指一个连通子图，它含有图中全部n个顶点，但只有足以构成一棵树的n-1条边。一颗有n个顶点的生成树 <strong>有且仅有n-1条边</strong>，如果生成树中再添加一条边，则必定成环。</li>
+<li>最小生成树：在连通网的所有生成树中，所有<strong>边的代价和最小</strong>的生成树，称为最小生成树。</li>
+</ul>
+</li>
+<li>
+<p>并查集</p>
+<ul>
+<li><strong>路径压缩</strong></li>
+</ul>
+</li>
+</ol>
+<pre class="cm-s-default CodeMirror language-C++"><code class="language-C++"><span class="cm-type">int</span><span> </span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">MAXN</span><span>]</span><span>;</span><span>
+</span><span class="cm-comment">//最小生成树中所连通的的点集</span><span>
+</span><span class="cm-type">void</span><span> </span><span class="cm-def">init_parent</span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">n</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">n</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">i</span><span>)</span><span>
+</span><span>        </span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">i</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">i</span><span>;</span><span>
+</span><span>}</span><span>
+</span><span class="cm-comment">//初始化每一个点的父亲为他本身</span><span>
+</span><span class="cm-type">int</span><span> </span><span class="cm-def">find_parent</span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">x</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-keyword">if</span><span> </span><span>(</span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">x</span><span>]</span><span> </span><span class="cm-operator">==</span><span> </span><span class="cm-variable">x</span><span>)</span><span>
+</span><span>        </span><span class="cm-keyword">return</span><span> </span><span class="cm-variable">x</span><span>;</span><span>
+</span><span>    </span><span class="cm-keyword">else</span><span>
+</span><span>    </span><span>{</span><span>
+</span><span>        </span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">x</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">find_parent</span><span>(</span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">x</span><span>]</span><span>)</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span class="cm-keyword">return</span><span> </span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">x</span><span>]</span><span>;</span><span>
+</span><span>}</span><span>
+</span><span class="cm-comment">//找爸爸 路径压缩</span><span>
+</span><span class="cm-type">bool</span><span> </span><span class="cm-def">check_unicom</span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">x</span><span>,</span><span> </span><span class="cm-type">int</span><span> </span><span class="cm-variable">y</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-keyword">return</span><span> </span><span class="cm-variable">find_parent</span><span>(</span><span class="cm-variable">x</span><span>)</span><span> </span><span class="cm-operator">==</span><span> </span><span class="cm-variable">find_parent</span><span>(</span><span class="cm-variable">y</span><span>)</span><span>;</span><span>
+</span><span>}</span><span>
+</span><span class="cm-comment">//判断连通性</span><span>
+</span><span class="cm-type">void</span><span> </span><span class="cm-def">merge</span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">x</span><span>,</span><span> </span><span class="cm-type">int</span><span> </span><span class="cm-variable">y</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-variable">parent</span><span>[</span><span class="cm-variable">find_parent</span><span>(</span><span class="cm-variable">x</span><span>)</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">find_parent</span><span>(</span><span class="cm-variable">y</span><span>)</span><span>;</span><span>
+</span><span>}</span><span>
+</span><span class="cm-comment">//将两个点连通</span><span>
+</span></code></pre>
+<hr>
+<h4>算法知识</h4>
+<ol>
+<li>本质：<strong>加边法</strong> <strong>贪心</strong> 按边权大小排序</li>
+<li>复杂度：<strong>O(ElogE)</strong> 仅和边数量有关</li>
+<li>解决问题：<strong>疏密图</strong> 上找最小生成树</li>
+</ol>
+<hr>
+<h4>算法模板</h4>
+<pre class="cm-s-default CodeMirror language-C++"><code class="language-C++"><span class="cm-keyword">struct</span><span> </span><span class="cm-def">EDGE</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-type">int</span><span> </span><span class="cm-variable">fr</span><span>,</span><span> </span><span class="cm-variable">to</span><span>;</span><span>
+</span><span>    </span><span class="cm-type">int</span><span> </span><span class="cm-variable">val</span><span>;</span><span>
+</span><span>    </span><span class="cm-type">bool</span><span> </span><span class="cm-keyword">operator</span><span class="cm-operator">&#x3C;</span><span>(</span><span class="cm-keyword">const</span><span> </span><span class="cm-variable">EDGE</span><span> </span><span class="cm-operator">&#x26;</span><span class="cm-variable">b</span><span>)</span><span> </span><span class="cm-keyword">const</span><span>
+</span><span>    </span><span>{</span><span>
+</span><span>        </span><span class="cm-keyword">return</span><span> </span><span class="cm-variable">val</span><span> </span><span class="cm-operator">&#x3C;</span><span> </span><span class="cm-variable">b</span><span>.</span><span class="cm-variable">val</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span class="cm-comment">//重载运算符按从小到大的顺序对边排序</span><span>
+</span><span>}</span><span> </span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">MAXE</span><span>]</span><span>;</span><span>
+</span><span class="cm-comment">//稀疏图使用结构体存边</span><span>
+</span><span class="cm-type">int</span><span> </span><span class="cm-def">kruskal</span><span>(</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-type">int</span><span> </span><span class="cm-variable">sum</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">0</span><span>;</span><span>
+</span><span>    </span><span class="cm-variable">init_parent</span><span>(</span><span class="cm-variable">n</span><span>)</span><span>;</span><span>
+</span><span>    </span><span class="cm-variable">sort</span><span>(</span><span class="cm-variable">edge</span><span> </span><span class="cm-operator">+</span><span> </span><span class="cm-number">1</span><span>,</span><span> </span><span class="cm-variable">edge</span><span> </span><span class="cm-operator">+</span><span> </span><span class="cm-variable">m</span><span> </span><span class="cm-operator">+</span><span> </span><span class="cm-number">1</span><span>)</span><span>;</span><span>
+</span><span>    </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">m</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">i</span><span>)</span><span>
+</span><span>    </span><span>{</span><span>
+</span><span>        </span><span class="cm-keyword">if</span><span> </span><span>(</span><span class="cm-operator">!</span><span class="cm-variable">check_unicom</span><span>(</span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>.</span><span class="cm-variable">fr</span><span>,</span><span> </span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>.</span><span class="cm-variable">to</span><span>)</span><span>)</span><span>
+</span><span>        </span><span>{</span><span>
+</span><span>            </span><span class="cm-variable">merge</span><span>(</span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>.</span><span class="cm-variable">fr</span><span>,</span><span> </span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>.</span><span class="cm-variable">to</span><span>)</span><span>;</span><span>
+</span><span>            </span><span class="cm-variable">sum</span><span> </span><span class="cm-operator">+=</span><span> </span><span class="cm-variable">edge</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>.</span><span class="cm-variable">val</span><span>;</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>        </span><span class="cm-comment">//判断连通性 若边起点与终点不连通则不在最小生成树内 将其加入最小生成树</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span class="cm-keyword">return</span><span> </span><span class="cm-variable">sum</span><span>;</span><span>
+</span><span>}</span><span>
+</span></code></pre>
+<hr>
+<h3>Prim</h3>
+<hr>
+<h4>算法知识</h4>
+<ol>
+<li>本质：<strong>加点法</strong> 每次加入点集内与点集外任一点最小的权值所连成的边，将点加入点集<code>vis[i]</code>，并更新点集内的点到点集外的点的权值<code>dis[i]</code>。</li>
+<li>复杂度：<strong>O(n2)</strong></li>
+</ol>
+<hr>
+<h4>算法模板</h4>
+<pre class="cm-s-default CodeMirror language-C++"><code class="language-C++"><span class="cm-type">int</span><span> </span><span class="cm-variable">graph</span><span>[</span><span class="cm-variable">MAXE</span><span>]</span><span>[</span><span class="cm-variable">MAXE</span><span>]</span><span>;</span><span>
+</span><span class="cm-type">int</span><span> </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">MAXE</span><span>]</span><span>;</span><span>
+</span><span class="cm-type">bool</span><span> </span><span class="cm-variable">vis</span><span>[</span><span class="cm-variable">MAXE</span><span>]</span><span>;</span><span>
+</span><span>
+</span><span class="cm-type">int</span><span> </span><span class="cm-def">prim</span><span>(</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span class="cm-type">int</span><span> </span><span class="cm-variable">now</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span>
+</span><span>    </span><span class="cm-comment">//选初始的点</span><span>
+</span><span>    </span><span class="cm-type">int</span><span> </span><span class="cm-variable">sum</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">0</span><span>;</span><span>
+</span><span>    </span><span class="cm-variable">vis</span><span>[</span><span class="cm-variable">now</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-atom">true</span><span>;</span><span>
+</span><span>    </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">n</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">i</span><span>)</span><span>
+</span><span>    </span><span>{</span><span>
+</span><span>        </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">i</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">graph</span><span>[</span><span class="cm-variable">now</span><span>]</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>;</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>    </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">2</span><span>;</span><span> </span><span class="cm-variable">i</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">n</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">i</span><span>)</span><span>
+</span><span>    </span><span>{</span><span>
+</span><span>        </span><span class="cm-type">int</span><span> </span><span class="cm-variable">min</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">INF</span><span>;</span><span>
+</span><span>        </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">nxt</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span> </span><span class="cm-variable">nxt</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">n</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">nxt</span><span>)</span><span>
+</span><span>        </span><span>{</span><span>
+</span><span>            </span><span class="cm-keyword">if</span><span> </span><span>(</span><span class="cm-operator">!</span><span class="cm-variable">vis</span><span>[</span><span class="cm-variable">nxt</span><span>]</span><span> </span><span class="cm-operator">&#x26;&#x26;</span><span> </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">i</span><span>]</span><span> </span><span class="cm-operator">&#x3C;</span><span> </span><span class="cm-variable">min</span><span>)</span><span>
+</span><span>            </span><span>{</span><span>
+</span><span>                </span><span class="cm-variable">now</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">nxt</span><span>;</span><span>
+</span><span>                </span><span class="cm-variable">min</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">i</span><span>]</span><span>;</span><span>
+</span><span>            </span><span>}</span><span>
+</span><span>            </span><span class="cm-comment">//若不在点集内 则找到与点击内点所连边权值最小的点</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>        </span><span class="cm-variable">vis</span><span>[</span><span class="cm-variable">now</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-atom">true</span><span>;</span><span>
+</span><span>        </span><span class="cm-comment">//加入点集</span><span>
+</span><span>        </span><span class="cm-variable">sum</span><span> </span><span class="cm-operator">+=</span><span> </span><span class="cm-variable">min</span><span>;</span><span>
+</span><span>        </span><span class="cm-keyword">for</span><span> </span><span>(</span><span class="cm-type">int</span><span> </span><span class="cm-variable">j</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-number">1</span><span>;</span><span> </span><span class="cm-variable">j</span><span> </span><span class="cm-operator">&#x3C;=</span><span> </span><span class="cm-variable">n</span><span>;</span><span> </span><span class="cm-operator">++</span><span class="cm-variable">j</span><span>)</span><span>
+</span><span>        </span><span>{</span><span>
+</span><span>            </span><span class="cm-keyword">if</span><span> </span><span>(</span><span class="cm-operator">!</span><span class="cm-variable">vis</span><span>[</span><span class="cm-variable">j</span><span>]</span><span> </span><span class="cm-operator">&#x26;&#x26;</span><span> </span><span class="cm-variable">graph</span><span>[</span><span class="cm-variable">now</span><span>]</span><span>[</span><span class="cm-variable">j</span><span>]</span><span> </span><span class="cm-operator">&#x3C;</span><span> </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">j</span><span>]</span><span>)</span><span>
+</span><span>            </span><span>{</span><span>
+</span><span>                </span><span class="cm-variable">dis</span><span>[</span><span class="cm-variable">j</span><span>]</span><span> </span><span class="cm-operator">=</span><span> </span><span class="cm-variable">graph</span><span>[</span><span class="cm-variable">now</span><span>]</span><span>[</span><span class="cm-variable">j</span><span>]</span><span>;</span><span>
+</span><span>            </span><span>}</span><span>
+</span><span>        </span><span>}</span><span>
+</span><span>        </span><span class="cm-comment">//更新点集外的点到点集内点的权值</span><span>
+</span><span>    </span><span>}</span><span>
+</span><span>}</span><span>
+</span></code></pre>
+<hr>
+</body>
+</html>
